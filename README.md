@@ -25,3 +25,14 @@ git clone https://github.com/MirandaJanell/dotfiles.git
 cd dotfiles
 stow .
 ```
+
+### OS Specific Instructions / Examples
+#### MacOS
+I use the [Homebrew](https://brew.sh) package manager on MacOS for managing a lot of the software I use. Installation instructions are on the [Homebrew](https://brew.sh) home page. Once `brew` is installed, the software dependencies can be installed with the following.
+
+```sh
+brew install git stow
+```
+
+##### A Note about git
+While MacOS has shipped with with `git` preinstalled for years, it is frequently an older version. I like to override this by installing the latest stable version using [Homebrew](https://brew.sh).
