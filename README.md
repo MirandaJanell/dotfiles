@@ -23,7 +23,7 @@
 cd ~
 git clone https://github.com/MirandaJanell/dotfiles.git
 cd dotfiles
-stow .
+stow --dotfiles .
 ```
 
 ### OS Specific Instructions / Examples
