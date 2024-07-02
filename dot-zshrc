@@ -1,0 +1,83 @@
+# Based on https://github.com/dreamsofautonomy/zensh/blob/main/.zshrc
+# Prerequisites
+# - Install a Nerd Font of your choice
+# - Install Oh My Posh - https://ohmyposh.dev/docs/installation/macos
+# - Install fzf - https://github.com/junegunn/fzf?tab=readme-ov-file#installation
+# - Install zoxide - https://github.com/ajeetdsouza/zoxide?tab=readme-ov-file#installation
+
+if [[ -f "/opt/homebrew/bin/brew" ]] then
+  # If you're using macOS, you'll want this enabled
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# Set the directory we want to store zinit and plugins
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+
+# Download Zinit, if it's not there yet
+if [ ! -d "$ZINIT_HOME" ]; then
+   mkdir -p "$(dirname $ZINIT_HOME)"
+   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+# Source/Load zinit
+source "${ZINIT_HOME}/zinit.zsh"
+
+# Add in zsh plugins
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
+
+# Add in snippets
+zinit snippet OMZP::1password
+zinit snippet OMZP::command-not-found
+zinit snippet OMZP::git
+zinit snippet OMZP::sudo
+
+# Load Completions
+autoload -U compinit && compinit
+zinit cdreplay -q
+
+# Initialize oh-my-posh but do not run with terminal emulators that do not display ANSI characters properly
+if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
+   eval "$(oh-my-posh init zsh)"
+#  eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/simple.toml)"
+fi
+
+# Keybindings
+bindkey '^f' autosuggest-accept
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+
+# History
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory # append to the history file rather than overwriting it
+setopt sharehistory # allow more than one session to use the same history file
+setopt hist_ignore_space # do not save history for commands that start with a space
+# ignore and do not save duplicates
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
+# Completion styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
+# Aliases
+alias ls='ls --color'
+
+# Shell integrations
+eval "$(fzf --zsh)"
+eval "$(zoxide init --cmd cd zsh)"
+
+if [[ -f "/usr/local/bin/sf" ]] then
+    eval "$(sf autocomplete script zsh)"
+fi
+

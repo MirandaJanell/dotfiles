@@ -32,7 +32,7 @@ stow --dotfiles .
 I use the [Homebrew](https://brew.sh) package manager on MacOS for managing a lot of the software I use. Installation instructions are on the [Homebrew](https://brew.sh) home page. Once `brew` is installed, the software dependencies can be installed with the following.
 
 ```sh
-brew install git stow font-meslo-lg-nerd-font
+brew install git stow fzf zoxide font-meslo-lg-nerd-font
 ```
 
 ##### A Note about git
