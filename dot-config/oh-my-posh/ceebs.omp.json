@@ -125,18 +125,16 @@
         },
         {
           "type": "python",
-          "style": "plain",
-          "template": "\ue235 ",
+          "style": "powerline",
+          "template": "\ue235 {{ if .Venv }}({{ .Venv }}){{ end }} ",
           "properties": {
-            "display_mode": "files",
-            "fetch_version": false,
-            "fetch_virtual_env": false
+            "display_mode": "environment",
+            "fetch_version": true,
+            "fetch_virtual_env": true
           },
           "background": "transparent",
           "foreground": "p:yellow",
-          "Text": "",
-          "Duration": 0,
-          "NameLength": 0
+          "powerline_symbol": "\ue0b0"
         },
         {
           "type": "shell",
